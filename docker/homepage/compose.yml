@@ -1,0 +1,34 @@
+version: "3"
+services:
+  homepage:
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: homepage
+    hostname: homepage
+    environment:
+      - PUID=0
+      - PGID=0
+    ports:
+      - 3000:3000
+    volumes:
+      - /opt/docker/homepage/config:/app/config
+      - /opt/docker/homepage/icons:/app/public/images
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
+  code-server:
+    image: lscr.io/linuxserver/code-server:latest
+    container_name: code-server
+    hostname: code-server
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=America/Detroit
+      - DEFAULT_WORKSPACE=/app/homepage
+    volumes:
+      - /opt/docker/code-server/config:/config
+      - /opt/docker/homepage/config:/app/homepage
+      - /opt/docker/homepage/icons:/app/homepage/images
+    ports:
+      - 8443:8443
+    restart: unless-stopped
+networks:
+  homepage: {}
