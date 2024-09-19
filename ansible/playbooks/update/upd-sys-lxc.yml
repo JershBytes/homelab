@@ -1,0 +1,49 @@
+---
+- name: Update and upgrade packages
+  hosts: all
+  become: true
+  vars:
+    gotify_ip: "{{ gotify_ip }}"  # Your Gotify host IP goes here
+    gotify_token: "{{ gotify_token }}"  # Your app token goes here
+
+  tasks:
+    - name: Get Hostnames
+      ansible.builtin.debug:
+        msg: "{{ ansible_hostname }}:{{ ansible_default_ipv4.address }}"
+
+    - name: Update all packages for apt-based systems
+      ansible.builtin.apt:
+        upgrade: dist
+      when: ansible_pkg_mgr == 'apt'
+
+    - name: Update all packages for dnf-based systems
+      ansible.builtin.dnf:
+        name: '*'
+        state: latest
+      when: ansible_pkg_mgr == 'dnf'
+
+    - name: Autoremove unused packages using apt
+      ansible.builtin.apt:
+        autoremove: true
+      when: ansible_pkg_mgr == 'apt'
+
+    - name: Autoremove unused packages using dnf
+      ansible.builtin.dnf:
+        autoremove: true
+      when: ansible_pkg_mgr == 'dnf'
+
+    - name: Check if a reboot is required.
+      ansible.builtin.stat:
+        path: /var/run/reboot-required
+      register: reboot_required_file
+
+    - name: Notify via Gotify
+      ansible.builtin.uri:
+        url: '{{ gotify_ip }}/message?token={{ gotify_token }}'
+        method: POST
+        body:
+          title: System Packages Update
+          message: System patching has been completed for {{ ansible_host }} and is now updated with a reboot status of {{ reboot_required_file.stat.exists == true }}.
+          priority: '5'
+        body_format: form-urlencoded
+      register: result

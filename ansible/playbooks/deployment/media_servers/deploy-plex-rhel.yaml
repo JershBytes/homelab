@@ -1,0 +1,31 @@
+---
+- name: Install Plex Media Server
+  hosts: plex
+  become: true
+
+  tasks:
+    - name: Install EPEL repository
+      ansible.builtin.yum:
+        name: epel-release
+        state: present
+
+    - name: Add Plex repository
+      ansible.builtin.yum_repository:
+        name: plex
+        description: Plex Repo
+        baseurl: "https://downloads.plex.tv/repo/rpm/$basearch"
+        gpgkey: "https://downloads.plex.tv/plex-keys/PlexSign.key"
+        gpgcheck: true
+        enabled: true
+
+    - name: Install Plex Media Server
+      ansible.builtin.yum:
+        name: plexmediaserver
+        state: present
+        update_cache: true
+
+    - name: Ensure Plex Media Server is enabled and started
+      ansible.builtin.service:
+        name: plexmediaserver
+        enabled: true
+        state: started

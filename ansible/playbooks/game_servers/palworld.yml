@@ -1,0 +1,51 @@
+---
+name: Install Palworld LinuxGSM Server
+hosts: game_servers
+become: true
+vars:
+  server_user: pwserver
+
+tasks:
+  - name: Update packages with apt
+    ansible.builtin.apt:
+      update_cache: true
+    when: ansible_pkg_mgr == 'apt'
+
+  - name: Update packages with dnf
+    ansible.builtin.dnf:
+      name: '*'
+      state: latest # noqa: package-latest
+    when: ansible_pkg_mgr == 'dnf'
+
+  - name: Upgrade packages with apt
+    ansible.builtin.apt:
+      upgrade: dist
+    when: ansible_pkg_mgr == 'apt'
+
+  - name: Upgrade packages with dnf
+    ansible.builtin.dnf:
+      name: '*'
+      state: latest # noqa: package-latest
+      exclude: kernel*
+    when: ansible_pkg_mgr == 'dnf'
+
+  - name: Create a user with a home directory
+    ansible.builtin.user:
+      name: "{{ server_user }}"
+      create_home: true
+
+  - name: Download LinuxGSM script
+    ansible.builtin.get_url:
+    url: https://linuxgsm.sh
+    dest: /home/{{ server_user }}/linuxgsm.sh
+    mode: '0755'
+
+  - name: Run LinuxGSM script for pwserver
+    ansible.builtin.command: bash /home/{{ server_user }}/linuxgsm.sh pwserver
+    args:
+      chdir: /home/{{ server_user }}
+    become: true
+
+  - name: Run pwserver installer
+    ansible.builtin.command:
+      bash /home/{{ server_user }}/pwserver install
