@@ -9,3 +9,7 @@ This Repository **Homelab** contains all my homelab documentation files. Here yo
 ## Contribution
 
 As this is my personal Homelab documentation, I don't accept any contributions. But feel free to fork this repository and use it for your own documentation.
+
+## Other Resources
+
+- [Dotfiles](https://github.com/coloredbytes/dotfiles) - My personal configuration files on macOS
