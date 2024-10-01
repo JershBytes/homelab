@@ -12,4 +12,4 @@ As this is my personal Homelab documentation, I don't accept any contributions. 
 
 ## Other Resources
 
-- [Dotfiles](https://github.com/coloredbytes/dotfiles) - My personal configuration files on macOS
+- [Dotfiles](https://github.com/coloredbytes/dotfiles) - My personal configuration files on macOS & Linux.
