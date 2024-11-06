@@ -1,0 +1,32 @@
+---
+services:
+    calibre:
+        image: linuxserver/calibre:7.19.0
+        container_name: calibre
+        hostname: calibre
+        restart: unless-stopped
+        environment:
+        - UMASK_SET # For umask setting of Calibre, default if left unset is 022.
+        - TZ =  America/Detroit # Specify a timezone to use e.g. Europe/London.
+        - PUID = 1000 # UID of user to take ownership of application/files
+        - PGID = 1000 # GID of user to take ownership of application/files
+        volumes:
+        - /host/path/to/config:/config # Where calibre should store its database and library
+        ports:
+        - 8081:8081/tcp # Calibre webserver gui.
+    
+    calibre-web:
+        image: linuxserver/calibre-web:0.6.23
+        container_name: calibre-web
+        hostname: calibre-web
+        restart: unless-stopped
+        environment:
+            - TZ # Specify a timezone to use EG Europe/London.
+            - PUID=1000 # ID of user to take ownership of application/files
+            - PGID=1000 # GID of user to take ownership of application/files
+            - DOCKER_MODS=linuxserver/calibre-web:calibre # #optional & x86-64 only Adds the ability to perform ebook conversion e.g. linuxserver/calibre-web:calibre 
+        volumes:
+            - /host/path/to/config:/config # Where calibre-web stores the internal database and config.
+            - /host/path/to/books:/books # Where your calibre database is located
+        ports:
+            - 8083:8083/tcp # Webui

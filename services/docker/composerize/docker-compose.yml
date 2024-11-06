@@ -1,0 +1,16 @@
+version: "3"
+services:
+    composerize:
+        stdin_open: true
+        tty: true
+        image: maaxgr/composerize:latest
+        command: composerize \
+    echo-server:
+        container_name: web1
+        networks:
+            - mynetwork
+        image: jmalloc/echo-server:latest
+networks:
+    mynetwork:
+        external: true
+        name: mynetwork
