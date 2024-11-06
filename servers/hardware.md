@@ -15,7 +15,7 @@ This machine is running Proxmox. Handles the game servers and monitoring and oth
 ### NASFeratu (TrueNAS)
 This machine is running TrueNAS. It runs all my media shares and backups for proxmox.  
 
-* 12th Gen Intel Core i5 1235U
+* Intel(R) Xeon(R) CPU E5-2650 v2 @ 2.60GHz (2)
 * 32GB DDR3 (1600 MT/s)
 * Kingstson 128GB (Boot Drive)
 * x8 Seagate 6TB SAS HDD in a RAID-Z2
