@@ -15,7 +15,7 @@
 
 
 <!-- Docs -->
-**Hey, there!** :wave:L
+**Hey, there!** :wave:
 
 **I’m Joshua, and I’m passionate about open-source and sharing my homelab endeavors.**
 
@@ -26,13 +26,13 @@ This Repository **Homelab** contains all my homelab documentation files. Here yo
 | Category | Description | Link |
 | :------: | :---------: | :--: |
 | Automation | Tools and configs that I use to automate my lab | [Click Here](./automation/)
-| Servers | Documentaiton of the Servers in my lab |  [Click Here](./servers/)
+| Servers | Documentation of the Servers in my lab |  [Click Here](./servers/)
 | Services | Docker Compose files or scripts that I Use to setup the services in my lab. | [Click Here](./services/)
 
 ## Contribution 🤝
 
-As this is my personal homelab documentation, I don't accept any contributions. But feel free to fork this repository and use it for your own documentation.
+As this is my personal Homelab documentation, I don't accept any contributions. But feel free to fork this repository and use it for your own documentation.
 
 ## Other Resources 🌱
 
-- [dotfiles](https://github.com/coloredbytes/dotfiles) - My personal configuration files on macOS & Linux.
+- [dotfiles](https://github.com/jershbytes/dotfiles) - My personal configuration files on macOS & Linux.
