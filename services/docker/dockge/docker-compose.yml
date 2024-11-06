@@ -1,0 +1,35 @@
+services:
+  dockge:
+    image: louislam/dockge:1
+    restart: always
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - dockge_data:/app/data
+      - /opt/docker/dockge/stacks:/opt/stacks
+    environment:
+      # Tell Dockge where to find the stacks
+      - DOCKGE_STACKS_DIR=/opt/stacks
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.dockge.entrypoints=http"
+      - "traefik.http.routers.dockge.rule=Host(`dockge.int.home.lab`)"
+      - "traefik.http.middlewares.dockge-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.dockge.middlewares=dockge-https-redirect"
+      - "traefik.http.routers.dockge-secure.entrypoints=https"
+      - "traefik.http.routers.dockge-secure.rule=Host(`dockge.int.home.lab`)"
+      - "traefik.http.routers.dockge-secure.tls=true"
+      - "traefik.http.routers.dockge-secure.service=dockge"
+      - "traefik.http.services.dockge.loadbalancer.server.port=5001"
+      - "traefik.docker.network=proxy"
+
+networks:
+  proxy:
+    external: true
+
+volumes:
+  dockge_data:
+    external: true
