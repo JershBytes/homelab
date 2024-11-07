@@ -16,6 +16,15 @@ variable "pve_node" {
   type = string
 }
 
+variable "user_account" {
+  type = string
+}
+
+variable "user_account_password" {
+  type = string
+  sensitive = true
+}
+
 ### Dynamic Variables ###
 
 variable "vm_name" {

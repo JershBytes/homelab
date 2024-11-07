@@ -7,12 +7,28 @@ resource "proxmox_virtual_environment_vm" "LINUXGSM-SERVER" {
   started     = false
   on_boot     = true
 
+  initialization {
+    user_account {
+      # do not use this in production, configure your own ssh key instead!
+      username = var.user_account
+      password = var.user_account_password
+    }
+  }
+
+  resource "proxmox_virtual_environment_download_file" "rocky_cloud_image" {
+  content_type = "iso"
+  datastore_id = "images"
+  node_name    = var.pve_node
+  url          = "https://dl.rockylinux.org/pub/rocky/9/images/x86_64/Rocky-9-GenericCloud-Base.latest.x86_64.qcow2"
+  file_name    = "rocky9.img"
+}
+
   agent {
     enabled = true
   }
 
   cpu {
-  sockets = 1
+  sockets = 2
   cores = var.cpu_cores
   }
 
@@ -21,28 +37,23 @@ resource "proxmox_virtual_environment_vm" "LINUXGSM-SERVER" {
   floating = 512
   }
 
-  clone {
-    node_name = var.pve_node
-    vm_id = var.vm_template
-    full = true
-  }
-
   operating_system {
     type = "l26"
   }
 
   disk {
     datastore_id = var.proxmox_storage
+    file_id      = proxmox_virtual_environment_download_file.rocky_cloud_image.id
     discard      = "on"
     interface    = "scsi0"
     size         = var.disk_size  # disk size in gigabytes (GB)
+    iotheread    = true
   }
 
   network_device {
-    bridge        = "vmbr0"
+    bridge        = "vmbr1"
     vlan_id       = var.vlan_id
     enabled       = "true"
-    # mac_address   = ""  # Set this following first creation of VM.
   }
 
   initialization {
@@ -61,4 +72,5 @@ resource "proxmox_virtual_environment_vm" "LINUXGSM-SERVER" {
 
   }
 
+}
 }
