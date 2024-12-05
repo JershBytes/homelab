@@ -3,7 +3,7 @@
   <a href="" rel="noopener">
   <img width=200px height=200px src="https://b.thumbs.redditmedia.com/Flac-ySmslzY0SE583PNA42rFbcYxLt7hqgCeUrC11s.png" alt="homelab logo"></a>
 <div align="center">
-<i> Honmelab in a repo </i>
+<i> It's a Homelab in a repo </i>
 </div>
 </p>
 
