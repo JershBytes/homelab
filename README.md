@@ -25,9 +25,9 @@ This Repository **Homelab** contains all my homelab documentation files. Here yo
 
 | Category | Description | Link |
 | :------: | :---------: | :--: |
-| Automation | Tools and configs that I use to automate my lab | [Click Here](./automation/)
-| Servers | Documentation of the Servers in my lab |  [Click Here](./servers/)
-| Services | Docker Compose files or scripts that I Use to setup the services in my lab. | [Click Here](./services/)
+| Ansible | Ansible Examples  | [Click Here](./ansible/)
+| Docker | Docker Examples |  [Click Here](./docker/)
+| Terraform  | Terraform Examples | [Click Here](./terraform/)
 
 ## Contribution 🤝
 
