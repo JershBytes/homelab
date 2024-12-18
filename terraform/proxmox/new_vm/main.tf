@@ -19,8 +19,8 @@ resource "proxmox_virtual_environment_vm" "LINUXGSM-SERVER" {
   content_type = "iso"
   datastore_id = "images"
   node_name    = var.pve_node
-  url          = "https://dl.rockylinux.org/pub/rocky/9/images/x86_64/Rocky-9-GenericCloud-Base.latest.x86_64.qcow2"
-  file_name    = "rocky9.img"
+  url          = "https://repo.almalinux.org/almalinux/9/cloud/x86_64/images/AlmaLinux-9-GenericCloud-latest.x86_64.qcow2"
+  file_name    = "AlmaLinux9.img"
 }
 
   agent {
