@@ -25,9 +25,10 @@ This Repository **Homelab** contains all my homelab documentation files. Here yo
 
 | Category | Description | Link |
 | :------: | :---------: | :--: |
-| Ansible | Ansible Examples  | [Click Here](./ansible/)
-| Docker | Docker Examples |  [Click Here](./docker/)
-| Terraform  | Terraform Examples | [Click Here](./terraform/)
+| Ansible | Ansible Examples  | [Click Here](./Ansible/)
+| Docker | Docker Examples |  [Click Here](./Docker/)
+| Terraform  | Terraform Examples | [Click Here](./Terraform/)
+| Servers | Run Down of my Servers | [Click Here](./Servers)
 
 ## Contribution 🤝
 
@@ -36,3 +37,4 @@ As this is my personal Homelab documentation, I don't accept any contributions. 
 ## Other Resources 🌱
 
 - [dotfiles](https://github.com/jershbytes/dotfiles) - My personal configuration files on macOS & Linux.
+- [Traefik Config](https://github.com/JershBytes/traefik-config) - Simple Config for traefik ( WIP as im still learning traefik)
