@@ -1,0 +1,72 @@
+---
+
+networks:
+  proxy:
+    external: true
+
+volumes:
+  grafana-volume:
+    external: true
+  influxdb-volume: 
+    external: true
+
+services:
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    hostname: grafana
+    restart: always
+    networks:
+      - proxy
+    volumes:
+      - grafana-volume:/var/lib/grafana
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.grafana.rule=Host(`grafana.local.example.com`)"
+      - "traefik.http.routers.grafana.entrypoints=https"
+      - "traefik.http.routers.grafana.tls=true"
+      - "traefik.http.services.grafana.loadbalancer.server.port=3000"
+  
+  influxdb:
+    image: influxdb
+    container_name: influxdb
+    restart: always
+    networks:
+      - proxy
+    volumes:
+      - influxdb-volume:/var/lib/influxdb
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.influxdb.rule=Host(`influxdb.local.example.com`)"
+      - "traefik.http.routers.influxdb.entrypoints=https"
+      - "traefik.http.routers.influxdb.tls=true"
+      - "traefik.http.services.influxdb.loadbalancer.server.port=8080"
+
+  watchtower:
+    container_name: watchtower
+    hostname: watchtower-int
+    image: containrrr/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - TZ=America/Detroit
+      - WATCHTOWER_CLEANUP=true
+      - WATCHTOWER_SCHEDULE= 0 0 3 * * *
+      - WATCHTOWER_NOTIFICATIONS=gotify
+      - WATCHTOWER_NOTIFICATION_GOTIFY_URL=${WATCHTOWER_NOTIFICATION_GOTIFY_URL}
+      - WATCHTOWER_NOTIFICATION_GOTIFY_TOKEN=${WATCHTOWER_NOTIFICATION_GOTIFY_TOKEN}
+    restart: unless-stopped
+  
+  dozzle:
+    container_name: dozzle
+    image: amir20/dozzle:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    ports:
+      - 9999:8080
+    environment:
+      DOZZLE_HOSTNAME: INT-Docker
+      DOZZLE_REMOTE_AGENT: ${AGENT}
+    restart: unless-stopped
+
+

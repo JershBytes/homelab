@@ -1,4 +1,8 @@
-version: "3"
+---
+networks:
+    proxy:
+        external: true
+
 services:
     composerize:
         stdin_open: true
@@ -8,9 +12,5 @@ services:
     echo-server:
         container_name: web1
         networks:
-            - mynetwork
+            - proxy
         image: jmalloc/echo-server:latest
-networks:
-    mynetwork:
-        external: true
-        name: mynetwork
