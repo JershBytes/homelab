@@ -21,8 +21,8 @@ services:
       - db
       - redis
     environment:
-      APP_URL: "http://localhost:3000"
-      APP_SECRET: "REPLACE_WITH_LONG_SECRET" # This can be generated with [ openssl rand -hex 32 ]
+      APP_URL: "${APP_URL}"
+      APP_SECRET: "${APP_SECRET}" # This can be generated with [ openssl rand -hex 32 ]
       DATABASE_URL: "postgresql://docmost:${DB_PASSWORD}@db:5432/docmost?schema=public"
       REDIS_URL: "redis://redis:6379"
     ports:
