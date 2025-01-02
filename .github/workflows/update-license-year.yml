@@ -19,9 +19,9 @@ jobs:
             LICENSE
 
       - name: Create pull request
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v6
         with:
           title: Update license
           commit-message: Update license
-          branch: main
-          delete-branch: false
+          branch: update-license
+          delete-branch: true
